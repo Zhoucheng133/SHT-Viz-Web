@@ -8,4 +8,13 @@ export default defineConfig({
     tailwindcss(),
     vue(),
   ],
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://192.168.124.2:7890',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '/api')
+      }
+    }
+  }
 })

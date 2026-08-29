@@ -14,7 +14,8 @@ import {
   Moon, 
   Activity,
   BarChart2,
-  Clock
+  Clock,
+  Laptop
 } from 'lucide-vue-next'
 
 // Reactive state
@@ -27,7 +28,8 @@ const todayMinHumidity = ref<number | null>(null)
 const lastUpdated = ref<string>('--:--:--')
 const loading = ref<boolean>(false)
 
-// Dark mode state
+// Theme state: 'auto' | 'light' | 'dark'
+const themeMode = ref<string>('auto')
 const isDark = ref<boolean>(true)
 
 // Charts refs
@@ -38,23 +40,47 @@ let todayChartInstance: echarts.ECharts | null = null
 let recentChartInstance: echarts.ECharts | null = null
 let timer: any = null
 
-// Toggle theme
-const toggleTheme = () => {
-  isDark.value = !isDark.value
-  if (isDark.value) {
-    document.documentElement.classList.add('dark')
-    localStorage.setItem('theme', 'dark')
+// Apply theme based on mode
+const applyTheme = (mode: string) => {
+  themeMode.value = mode
+  localStorage.setItem('themeMode', mode)
+
+  let dark = false
+  if (mode === 'auto') {
+    dark = window.matchMedia('(prefers-color-scheme: dark)').matches
+  } else if (mode === 'dark') {
+    dark = true
   } else {
-    document.documentElement.classList.remove('dark')
-    localStorage.setItem('theme', 'light')
+    dark = false
+  }
+
+  isDark.value = dark
+  const root = document.documentElement
+  if (dark) {
+    root.classList.add('dark')
+    root.style.colorScheme = 'dark'
+  } else {
+    root.classList.remove('dark')
+    root.style.colorScheme = 'light'
   }
   updateChartsTheme()
+}
+
+// Toggle theme in cycle: auto -> light -> dark -> auto
+const toggleTheme = () => {
+  if (themeMode.value === 'auto') {
+    applyTheme('light')
+  } else if (themeMode.value === 'light') {
+    applyTheme('dark')
+  } else {
+    applyTheme('auto')
+  }
 }
 
 // Fetch current sensor data
 const fetchCurrentData = async () => {
   try {
-    const res = await axios.get('/get')
+    const res = await axios.get('/api/get')
     if (res.data) {
       if (res.data.temperature !== undefined) currentTemp.value = res.data.temperature
       if (res.data.humidity !== undefined) currentHumidity.value = res.data.humidity
@@ -74,12 +100,12 @@ const fetchTodayData = async () => {
 
   try {
     // Today series data
-    const res = await axios.get(`/get/day?year=${year}&month=${month}&day=${day}`)
+    const res = await axios.get(`/api/get/day?year=${year}&month=${month}&day=${day}`)
     const list = res.data || []
     
     // Today min/max
-    const maxRes = await axios.get(`/get/maxByDay?year=${year}&month=${month}&day=${day}`)
-    const minRes = await axios.get(`/get/minByDay?year=${year}&month=${month}&day=${day}`)
+    const maxRes = await axios.get(`/api/get/maxByDay?year=${year}&month=${month}&day=${day}`)
+    const minRes = await axios.get(`/api/get/minByDay?year=${year}&month=${month}&day=${day}`)
 
     if (maxRes.data && maxRes.data.temperature !== undefined) {
       todayMaxTemp.value = maxRes.data.temperature
@@ -107,8 +133,8 @@ const fetchTodayData = async () => {
 const fetchRecentData = async () => {
   try {
     const [tempRes, humiRes] = await Promise.all([
-      axios.get('/get/recent/temperature?day=60'),
-      axios.get('/get/recent/humidity?day=60')
+      axios.get('/api/get/recent/temperature?day=60'),
+      axios.get('/api/get/recent/humidity?day=60')
     ])
     
     renderRecentChart(tempRes.data || [], humiRes.data || [])
@@ -143,13 +169,16 @@ const renderTodayChart = (data: any[]) => {
     legend: {
       data: ['Temperature (°C)', 'Humidity (%)'],
       textStyle: { color: textColor },
-      top: 0
+      top: 0,
+      itemWidth: 25,
+      itemHeight: 14,
+      itemGap: 20
     },
     grid: {
-      top: 40,
-      bottom: 25,
-      left: 35,
-      right: 35,
+      top: 55,
+      bottom: 30,
+      left: 40,
+      right: 40,
       containLabel: true
     },
     xAxis: {
@@ -258,13 +287,16 @@ const renderRecentChart = (tempData: any[], humiData: any[]) => {
     legend: {
       data: ['Max Temp', 'Min Temp', 'Max Humidity', 'Min Humidity'],
       textStyle: { color: textColor },
-      top: 0
+      top: 0,
+      itemWidth: 25,
+      itemHeight: 12,
+      itemGap: 15
     },
     grid: {
-      top: 40,
-      bottom: 25,
-      left: 35,
-      right: 35,
+      top: 60,
+      bottom: 30,
+      left: 40,
+      right: 40,
       containLabel: true
     },
     xAxis: {
@@ -371,14 +403,8 @@ const handleResize = () => {
 
 onMounted(() => {
   // Check system/saved theme
-  const savedTheme = localStorage.getItem('theme')
-  if (savedTheme === 'light' || (!savedTheme && window.matchMedia('(prefers-color-scheme: light)').matches)) {
-    isDark.value = false
-    document.documentElement.classList.remove('dark')
-  } else {
-    isDark.value = true
-    document.documentElement.classList.add('dark')
-  }
+  const savedMode = localStorage.getItem('themeMode') || (localStorage.getItem('theme') ? (localStorage.getItem('theme') === 'dark' ? 'dark' : 'light') : 'auto')
+  applyTheme(savedMode)
 
   refreshAll()
   window.addEventListener('resize', handleResize)
@@ -420,7 +446,6 @@ onUnmounted(() => {
           <button 
             @click="refreshAll" 
             class="p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all flex items-center gap-1.5 text-sm font-medium shadow-sm active:scale-95 cursor-pointer"
-            :class="{ 'animate-spin': loading }"
             title="Refresh Data"
           >
             <RefreshCw class="w-4 h-4" />
@@ -429,11 +454,13 @@ onUnmounted(() => {
 
           <button 
             @click="toggleTheme" 
-            class="p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all shadow-sm active:scale-95 cursor-pointer"
-            title="Toggle Theme"
+            class="p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all shadow-sm active:scale-95 cursor-pointer flex items-center gap-1.5 px-3"
+            :title="`Theme: ${themeMode.charAt(0).toUpperCase() + themeMode.slice(1)} (Click to switch)`"
           >
-            <Sun v-if="isDark" class="w-5 h-5 text-amber-400" />
-            <Moon v-else class="w-5 h-5 text-indigo-600" />
+            <Laptop v-if="themeMode === 'auto'" class="w-4 h-4 text-blue-500" />
+            <Sun v-else-if="themeMode === 'light'" class="w-4 h-4 text-amber-500" />
+            <Moon v-else class="w-4 h-4 text-indigo-400" />
+            <span class="text-xs font-medium capitalize hidden sm:inline">{{ themeMode }}</span>
           </button>
         </div>
       </div>
