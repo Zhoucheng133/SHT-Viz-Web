@@ -172,7 +172,12 @@ const renderTodayChart = (data: any[]) => {
       top: 0,
       itemWidth: 25,
       itemHeight: 14,
-      itemGap: 20
+      itemGap: 20,
+      selected: {
+        'Temperature (°C)': true,
+        'Humidity (°C)': false, // or handle humidity
+        'Humidity (%)': false
+      }
     },
     grid: {
       top: 55,
@@ -193,6 +198,9 @@ const renderTodayChart = (data: any[]) => {
         type: 'value',
         name: 'Temp (°C)',
         position: 'left',
+        scale: true,
+        min: (value: { min: number; max: number }) => Math.floor(value.min),
+        max: (value: { min: number; max: number }) => Math.ceil(value.max),
         splitLine: { lineStyle: { color: gridColor } },
         axisLabel: { formatter: '{value} °C' },
         axisLine: { lineStyle: { color: '#ef4444' } }
@@ -201,7 +209,9 @@ const renderTodayChart = (data: any[]) => {
         type: 'value',
         name: 'Humi (%)',
         position: 'right',
-        max: 100,
+        scale: true,
+        min: (value: { min: number; max: number }) => Math.max(0, Math.floor(value.min - 2)),
+        max: (value: { min: number; max: number }) => Math.min(100, Math.ceil(value.max + 2)),
         splitLine: { show: false },
         axisLabel: { formatter: '{value} %' },
         axisLine: { lineStyle: { color: '#3b82f6' } }
@@ -290,7 +300,11 @@ const renderRecentChart = (tempData: any[], humiData: any[]) => {
       top: 0,
       itemWidth: 25,
       itemHeight: 12,
-      itemGap: 15
+      itemGap: 15,
+      selected: {
+        'Max Humidity': false,
+        'Min Humidity': false
+      }
     },
     grid: {
       top: 60,
@@ -311,6 +325,9 @@ const renderRecentChart = (tempData: any[], humiData: any[]) => {
         type: 'value',
         name: 'Temp (°C)',
         position: 'left',
+        scale: true,
+        min: (value: { min: number; max: number }) => Math.floor(value.min - 1),
+        max: (value: { min: number; max: number }) => Math.ceil(value.max + 1),
         splitLine: { lineStyle: { color: gridColor } },
         axisLabel: { formatter: '{value}°C' },
         axisLine: { lineStyle: { color: '#f97316' } }
@@ -319,7 +336,9 @@ const renderRecentChart = (tempData: any[], humiData: any[]) => {
         type: 'value',
         name: 'Humi (%)',
         position: 'right',
-        max: 100,
+        scale: true,
+        min: (value: { min: number; max: number }) => Math.max(0, Math.floor(value.min - 2)),
+        max: (value: { min: number; max: number }) => Math.min(100, Math.ceil(value.max + 2)),
         splitLine: { show: false },
         axisLabel: { formatter: '{value}%' },
         axisLine: { lineStyle: { color: '#06b6d4' } }
