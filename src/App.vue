@@ -12,7 +12,6 @@ import {
   RefreshCw, 
   Sun, 
   Moon, 
-  Activity,
   BarChart2,
   Clock,
   Laptop
@@ -448,9 +447,7 @@ onUnmounted(() => {
     <header class="sticky top-0 z-50 backdrop-blur-md bg-white/75 dark:bg-slate-900/75 border-b border-slate-200 dark:border-slate-800 shadow-sm">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <div class="flex items-center space-x-3">
-          <div class="bg-gradient-to-tr from-blue-600 to-indigo-600 p-2.5 rounded-xl shadow-md shadow-blue-500/20 text-white">
-            <Activity class="w-6 h-6 animate-pulse" />
-          </div>
+          <img src="/icon.svg" alt="" class="w-9 h-9">
           <div>
             <h1 class="text-lg font-bold tracking-tight bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent">
               Environmental Monitor
