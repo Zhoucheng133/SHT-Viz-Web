@@ -229,48 +229,6 @@
     "@emnapi/runtime" "^1.4.3"
     "@tybys/wasm-util" "^0.10.0"
 
-"@primeuix/styled@^0.7.2":
-  version "0.7.2"
-  resolved "https://registry.npmmirror.com/@primeuix/styled/-/styled-0.7.2.tgz#36cfe3e743559ef5c31b0e87083fb05a26993ec6"
-  integrity sha512-tIJ6byZezTYZ9YUICNSidQHOIQOQL3zeUgjwiX0JnBTK3+WCvy4DyCBcrJ94RtiX0WGFZSYNvaGaFkTo4jU8FQ==
-  dependencies:
-    "@primeuix/utils" "^0.6.1"
-
-"@primeuix/styles@^1.2.3":
-  version "1.2.3"
-  resolved "https://registry.npmmirror.com/@primeuix/styles/-/styles-1.2.3.tgz#d7b80cf9a05503deaf8b11db6fd74c0155a8ea3f"
-  integrity sha512-+KwmQsLTYgVAqFADmO252btz40lstPML6r4QMNjxz4gLNCKVW3kPR0/aCouQx6/21+boXG1P68tu8Zk3FAKr2w==
-  dependencies:
-    "@primeuix/styled" "^0.7.2"
-
-"@primeuix/themes@^1.2.3":
-  version "1.2.3"
-  resolved "https://registry.npmmirror.com/@primeuix/themes/-/themes-1.2.3.tgz#b03fd00613a0749953311fde21630a9317753d81"
-  integrity sha512-GLAU2h6lhgln2w10EQalUQlgwbgQ0xZoIOLMNGfIvqU4O09L282P7rwKCKQksvAGAFt1GoO/Q1NgBSxnttr7iA==
-  dependencies:
-    "@primeuix/styled" "^0.7.2"
-
-"@primeuix/utils@^0.6.1":
-  version "0.6.1"
-  resolved "https://registry.npmmirror.com/@primeuix/utils/-/utils-0.6.1.tgz#34af8e05aa9a142bf3c290381b5e104dc15e52b5"
-  integrity sha512-tQL/ZOPgCdD+NTimlUmhyD0ey8J1XmpZE4hDHM+/fnuBicVVmlKOd5HpS748LcOVRUKbWjmEPdHX4hi5XZoC1Q==
-
-"@primevue/core@4.3.7":
-  version "4.3.7"
-  resolved "https://registry.npmmirror.com/@primevue/core/-/core-4.3.7.tgz#0caa334efd9debe2e62bc8d8f814e6f51188de64"
-  integrity sha512-rYmEZTKs/C2Re+xFluY9R02+n4TcyJshooPPOG6zc23v/bmhrfcqCiS5gNiuXF/lYoOh4y8VTcHF6eZCZW724Q==
-  dependencies:
-    "@primeuix/styled" "^0.7.2"
-    "@primeuix/utils" "^0.6.1"
-
-"@primevue/icons@4.3.7":
-  version "4.3.7"
-  resolved "https://registry.npmmirror.com/@primevue/icons/-/icons-4.3.7.tgz#2c5dcd875161f15e45172ca69cf8829917d7ae63"
-  integrity sha512-CKiOeiJzNSbELwbQdrgWHgmfcAmjNQXqRZtBGb8sUPrB8hjWf9lYMBAbcAuqJbyLFFcC0lFiB80CfBR07FNSHw==
-  dependencies:
-    "@primeuix/utils" "^0.6.1"
-    "@primevue/core" "4.3.7"
-
 "@rolldown/pluginutils@1.0.0-beta.29":
   version "1.0.0-beta.29"
   resolved "https://registry.npmmirror.com/@rolldown/pluginutils/-/pluginutils-1.0.0-beta.29.tgz#f8fc9a8788757dccba0d3b7fee93183621773d4c"
@@ -745,14 +703,6 @@ dunder-proto@^1.0.1:
     es-errors "^1.3.0"
     gopd "^1.2.0"
 
-echarts@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.npmmirror.com/echarts/-/echarts-6.0.0.tgz#2935aa7751c282d1abbbf7d719d397199a15b9e7"
-  integrity sha512-Tte/grDQRiETQP4xz3iZWSvoHrkCQtwqd6hs+mifXcjrCuo2iKWbajFObuLJVBlDIJlOzgQPd1hsaKt/3+OMkQ==
-  dependencies:
-    tslib "2.3.0"
-    zrender "6.0.0"
-
 enhanced-resolve@^5.18.3:
   version "5.18.3"
   resolved "https://registry.npmmirror.com/enhanced-resolve/-/enhanced-resolve-5.18.3.tgz#9b5f4c5c076b8787c78fe540392ce76a88855b44"
@@ -1094,22 +1044,6 @@ postcss@^8.5.6:
     picocolors "^1.1.1"
     source-map-js "^1.2.1"
 
-primeicons@^7.0.0:
-  version "7.0.0"
-  resolved "https://registry.npmmirror.com/primeicons/-/primeicons-7.0.0.tgz#6b25c3fdcb29bb745a3035bdc1ed5902f4a419cf"
-  integrity sha512-jK3Et9UzwzTsd6tzl2RmwrVY/b8raJ3QZLzoDACj+oTJ0oX7L9Hy+XnVwgo4QVKlKpnP/Ur13SXV/pVh4LzaDw==
-
-primevue@^4.3.7:
-  version "4.3.7"
-  resolved "https://registry.npmmirror.com/primevue/-/primevue-4.3.7.tgz#6f2886e7e272e8d0d272d36e37e0eb1c8e2d29aa"
-  integrity sha512-yyknh2kFjSGwRyxqmUUWy/pY4FK1vxoonGH3eQdtd8k/sGl5JpSQ2f0tXpR79lV6dcGf3FZPL1B5JNR11zJfmg==
-  dependencies:
-    "@primeuix/styled" "^0.7.2"
-    "@primeuix/styles" "^1.2.3"
-    "@primeuix/utils" "^0.6.1"
-    "@primevue/core" "4.3.7"
-    "@primevue/icons" "4.3.7"
-
 proxy-from-env@^1.1.0:
   version "1.1.0"
   resolved "https://registry.npmmirror.com/proxy-from-env/-/proxy-from-env-1.1.0.tgz#e102f16ca355424865755d2c9e8ea4f24d58c3e2"
@@ -1196,11 +1130,6 @@ tinyglobby@^0.2.14:
     fdir "^6.4.4"
     picomatch "^4.0.2"
 
-tslib@2.3.0:
-  version "2.3.0"
-  resolved "https://registry.npmmirror.com/tslib/-/tslib-2.3.0.tgz#803b8cdab3e12ba581a4ca41c8839bbb0dacb09e"
-  integrity sha512-N82ooyxVNm6h1riLCoyS9e3fuJ3AMG2zIZs2Gd1ATcSFjSA23Q0fzjjZeh0jbJvWVDZ0cJT8yaNNaaXHzueNjg==
-
 tslib@^2.4.0, tslib@^2.8.0:
   version "2.8.1"
   resolved "https://registry.npmmirror.com/tslib/-/tslib-2.8.1.tgz#612efe4ed235d567e8aba5f2a5fab70280ade83f"
@@ -1253,10 +1182,3 @@ yallist@^5.0.0:
   version "5.0.0"
   resolved "https://registry.npmmirror.com/yallist/-/yallist-5.0.0.tgz#00e2de443639ed0d78fd87de0d27469fbcffb533"
   integrity sha512-YgvUTfwqyc7UXVMrB+SImsVYSmTS8X/tSrtdNZMImM+n7+QTriRXyXim0mBrTXNeqzVF0KWGgHPeiyViFFrNDw==
-
-zrender@6.0.0:
-  version "6.0.0"
-  resolved "https://registry.npmmirror.com/zrender/-/zrender-6.0.0.tgz#947077bc69cdea744134984927f132f3727f8079"
-  integrity sha512-41dFXEEXuJpNecuUQq6JlbybmnHaqqpGlbH1yxnA5V9MMP4SbohSVZsJIwz+zdjQXSSlR1Vc34EgH1zxyTDvhg==
-  dependencies:
-    tslib "2.3.0"
