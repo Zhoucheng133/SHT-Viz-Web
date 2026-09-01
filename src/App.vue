@@ -76,6 +76,8 @@ const toggleTheme = () => {
   }
 }
 
+const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
 // Fetch current sensor data
 const fetchCurrentData = async () => {
   try {
@@ -423,6 +425,7 @@ onMounted(() => {
   // Check system/saved theme
   const savedMode = localStorage.getItem('themeMode') || (localStorage.getItem('theme') ? (localStorage.getItem('theme') === 'dark' ? 'dark' : 'light') : 'auto')
   applyTheme(savedMode)
+  darkModeMediaQuery.addEventListener("change", (_)=>applyTheme(savedMode));
 
   refreshAll()
   window.addEventListener('resize', handleResize)
